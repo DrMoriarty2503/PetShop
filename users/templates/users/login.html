@@ -1,0 +1,227 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Popug Shop Shop</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f9ff;
+            color: #036;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #0294a5;
+            color: #ffffff;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px #0002;
+        }
+        .navbar .logo a, .navbar a, .navbar .login button {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 8px 16px;
+            display: inline-block;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .navbar .nav a:not(:last-child) {
+            margin-right: 10px;
+        }
+        .navbar .nav a:hover, .navbar .login button:hover {
+            background-color: #02b1c8;
+        }
+        .navbar .login button {
+            background-color: #f18f01;
+            border: none;
+            cursor: pointer;
+        }
+        .content {
+            margin: 20px auto;
+            text-align: center;
+            flex: 1;
+            max-width: 400px;
+        }
+        .footer {
+            background-color: #0294a5;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 15px;
+            width: 100%;
+            box-shadow: 0 -2px 4px #0002;
+            margin-top: auto;
+        }
+        .login-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #02b1c8;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #036;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #02b1c8;
+            box-sizing: border-box;
+        }
+        .submit-button {
+            background-color: #f18f01;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .register-link a {
+            color: #0294a5;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+            .navbar .nav, .navbar .login {
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            .navbar .nav a, .navbar .login button {
+                width: 100%;
+                text-align: center;
+            }
+            .content {
+                width: 90%;
+            }
+        }
+
+        .navbar .logo {
+            display: flex;
+            align-items: center;
+        }
+        .navbar .logo img {
+            height: 32px;
+            margin-right: 10px;
+        }
+        .navbar .logo a {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: center;
+            }
+            .navbar .nav, .navbar .login {
+                width: 100%;
+                justify-content: center;
+                margin-top: 10px;
+            }
+            .navbar .nav a, .navbar .login button {
+                width: 100%;
+                text-align: center;
+            }
+        }
+        @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+        }
+        .navbar .logo, .navbar .nav, .navbar .login {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 5px 0;
+        }
+        .navbar .nav {
+            flex-direction: column;
+        }
+        .navbar .nav a, .navbar .login button {
+            width: auto;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+    }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="logo">
+                <a href="{% url 'main:index' %}">Popug Shop</a>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="nav">
+                <a href="{% url 'main:order' %}">Мои заявки</a>
+                <a href="{% url 'catalog:index' %}">Каталог</a>
+                <a href="{% url 'main:carts' %}">Корзина</a>
+            </div>
+            <div class="login">
+                <button onclick="location.href='{% url 'logout' %}'">Выйти</button>
+            </div>
+
+            {% else %}
+            <div class="nav">
+                <a href="{% url 'catalog:index' %}">Каталог</a>
+            </div>
+            <div class="login">
+                <button onclick="location.href='{% url 'login' %}'">Войти</button>
+            </div>
+            {% endif %}
+            </div>
+
+    <div class="content">
+        <div class="login-form">
+            <h2>Вход</h2>
+            <form  method="post">
+                {% csrf_token %}
+                {% for f in form %}
+                <div class="form-group">
+                    <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+                    <input type="{{ f.field.widget.input_type }}"  name="{{ f.html_name }}" id="{{ f.id_for_label }}" {% if f.field.required %}required{% endif %}>
+                    <div class="form-error">{{ f.errors }}</div>
+                </div>
+                {% endfor %}
+
+                <button type="submit" class="submit-button">Войти</button>
+            </form>
+            <div class="register-link">
+                <span>Нет аккаунта? <a href="{% url 'register' %}">Регистрация</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p> Частин Денис</p>
+    </div>
+
+</body>
+</html>

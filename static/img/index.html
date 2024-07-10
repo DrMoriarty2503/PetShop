@@ -1,0 +1,318 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popug Shop Shop</title>
+    <style>
+        body {
+            font-family: 'Trebuchet MS', Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f9ff;
+            color: #036;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .navbar {
+            background-color: #0294a5;
+            color: #ffffff;
+            padding: 10px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px #0002;
+        }
+        .navbar .logo a {
+            font-size: 2rem;
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .navbar a, .navbar .login button {
+            color: #ffffff;
+            padding: 8px 16px;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .navbar .nav a:not(:last-child) {
+            margin-right: 10px;
+        }
+        .navbar .nav a:hover, .navbar .login button:hover {
+            background-color: #02b1c8;
+        }
+        .navbar .login button {
+            background-color: #f18f01;
+            border: none;
+            cursor: pointer;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+            width: 100%;
+        }
+        .search-bar input[type="text"] {
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 4px;
+            border: 1px solid #0294a5;
+            width: calc(100% - 220px);
+            max-width: 600px;
+        }
+        .search-bar button {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            background-color: #f18f01;
+            color: white;
+            cursor: pointer;
+        }
+        .hero {
+            background-image: url('tropical-parrot.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            background-color: rgba(2, 148, 165, 0.75);
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px #0004;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
+        }
+        .content h2 {
+            color: #0294a5;
+            font-size: 2rem;
+        }
+        .content p {
+            color: #555;
+            line-height: 1.6;
+            max-width: 800px;
+            text-align: center;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .product {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: calc(33.333% - 20px);
+            max-width: 300px;
+        }
+        .product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .product img {
+            width: 100%;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+        .product h3, .product p {
+            margin: 10px;
+            color: #036;
+        }
+        .footer {
+            background-color: #0294a5;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            box-shadow: 0 -2px 4px #0002;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .nav, .navbar .login {
+                flex-direction: column;
+                align-items: flex-end;
+            }
+            .navbar .nav a, .navbar .login button {
+                width: 100%;
+                margin-top: 10px;
+                text-align: center;
+            }
+            .search-bar input[type="text"], .search-bar button {
+                width: 90%;
+            }
+            .product {
+                width: calc(50% - 20px);
+            }
+            .hero h1 {
+                font-size: 2rem;
+            }
+            .content h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .product {
+                width: 90%;
+            }
+        }
+        body {
+            font-family: 'Trebuchet MS', Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f9ff;
+            color: #036;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        .footer {
+            background-color: #0294a5;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            box-shadow: 0 -2px 4px #0002;
+        }
+        @media (max-width: 768px) {
+        .navbar {
+            flex-direction: column;
+            align-items: flex-start;
+            padding-bottom: 10px;
+        }
+        .navbar .logo, .navbar .nav, .navbar .login {
+            width: 100%;
+            justify-content: space-between;
+        }
+        .navbar .nav {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .navbar .nav a {
+            padding: 8px 16px;
+            text-align: left;
+            border-bottom: 1px solid #e7e7e7;
+            margin-right: 0;
+            width: 100%;
+        }
+        .navbar .login button {
+            margin-top: 10px;
+        }
+    }
+
+    
+    @media (max-width: 480px) {
+        .navbar .logo a {
+            font-size: 1.5rem;
+        }
+        .search-bar input[type="text"], .search-bar button {
+            width: 90%;
+            margin: 10px 0;
+        }
+    }
+    </style>
+</head>
+<body>
+    
+    <div class="content-wrapper">
+        <div class="navbar">
+            <div class="logo">
+                <a href="{% url 'main:index' %}">Popug Shop</a>
+            </div>
+            {% if user.is_authenticated %}
+            <div class="nav">
+                <a href="{% url 'main:order' %}">Мои заявки</a>
+                <a href="{% url 'catalog:index' %}">Каталог</a>
+                <a href="{% url 'main:carts' %}">Корзина</a>
+            </div>
+            <div class="login">
+                <button onclick="location.href='{% url 'logout' %}'">Выйти</button>
+            </div>
+
+            {% else %}
+            <div class="nav">
+                <a href="{% url 'catalog:index' %}">Каталог</a>
+            </div>
+            <div class="login">
+                <button onclick="location.href='{% url 'login' %}'">Войти</button>
+            </div>
+            {% endif %}
+            </div>
+        
+        <div class="search-bar">
+            <input type="text" placeholder="Ищите экзотических птиц, аксессуары и многое другое...">
+            <button>Поиск</button>
+        </div>
+        
+        <div class="hero">
+            <h1>Добро пожаловать в мир птиц</h1>
+        </div>
+        
+        <div class="content">
+            <h2>Исследуйте наш ассортимент</h2>
+            <p>Откройте для себя мир красочных птиц. У нас есть все, чтобы украсить ваш дом и сделать вашу жизнь ярче!</p>
+            
+            <div class="product-list">
+                {% if not user.is_authenticated %}
+
+                {% for p in popug %}
+
+                <div class="product">
+                    <img src="{{p.image.url}}" alt="Попугай">
+                    <h3>{{p.name}}</h3>
+                    <p>Цена: {{p.price}} руб.</p>
+                </div>
+                {% endfor %}
+
+                {% else %}
+
+                {% for c in cart %}
+
+                <div class="product">
+                    <img src="{{c.image.url}}" alt="Попугай">
+                    <h3>{{c.name}}</h3>
+                    <p>Цена: {{c.price}} руб.</p>
+                </div>
+                {% endfor %}
+
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p> Частин Денис</p>
+    </div>
+</body>
+</html>
